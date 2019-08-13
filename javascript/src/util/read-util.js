@@ -1,33 +1,40 @@
 const readline = require('readline');
 
-const rl = readline.createInterface({
+function question(query) {
+  const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
-});
+  });
 
-function question(query) {
-    return new Promise(resolve => {
-        rl.question(query, input => resolve(input));
-    })
-};
+  return new Promise(resolve => {
+    rl.question(query, input => {
+      rl.close();
+      resolve(input);
+    });
+  });
+}
 
 function questionForNumber(query) {
-    return new Promise((resolve, reject) => {
-        rl.question(query, input => {
-            if (input === '') {
-                resolve('');
-            } else if (isNaN(input)) {
-                reject();
-            } else {
-                resolve(+input);
-            }
-        });
-    }).catch(() => {
-        return questionForNumber(query);
-    })
-}
-function close() {
-    rl.close();
-}
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+  });
 
-module.exports = {question, questionForNumber, close};
+  return new Promise((resolve, reject) => {
+    rl.question(query, input => {
+      rl.close();
+      if (input === '') {
+        resolve('');
+      } else if (isNaN(input)) {
+        reject();
+      } else {
+        resolve(+input);
+      }
+    });
+  }).catch(() => {
+    return questionForNumber(query);
+  });
+}
+function close() {}
+
+module.exports = { question, questionForNumber, close };

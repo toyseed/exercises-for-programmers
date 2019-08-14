@@ -1,8 +1,8 @@
 const ru = require('../util/read-util');
 
-const Celisus = {
+const Celsius = {
   code: 'C',
-  name: 'Celisus',
+  name: 'Celsius',
   toC: temperature => temperature,
   toF: temperature => (temperature * 9) / 5 + 32,
   toK: temperature => 273.15 + temperature
@@ -13,18 +13,18 @@ const Fahrenheit = {
   name: 'Fahrenheit',
   toC: temperature => ((temperature - 32) * 5) / 9,
   toF: temperature => temperature,
-  toK: temperature => Celisus.toK(this.toC(temperature))
+  toK: temperature => Celsius.toK(this.toC(temperature))
 };
 
 const Kelvin = {
   code: 'K',
   name: 'Kelvin',
   toC: temperature => temperature - 273.15,
-  toF: temperature => Celisus.toF(this.toC(temperature)),
+  toF: temperature => Celsius.toF(this.toC(temperature)),
   toK: temperature => temperature
 };
 
-const temperatureTypes = [Celisus, Fahrenheit, Kelvin];
+const temperatureTypes = [Celsius, Fahrenheit, Kelvin];
 
 (async () => {
   const fromTemperatureType = await askTemperatureType('from');
@@ -83,7 +83,7 @@ async function askTemperature(fromTemperatureType) {
 function getTemperatureConverter(fromTemperatureType, toTemperatureType) {
   let converter;
   switch (toTemperatureType) {
-    case Celisus:
+    case Celsius:
       converter = fromTemperatureType.toC;
       break;
     case Fahrenheit:

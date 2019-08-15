@@ -1,3 +1,9 @@
+/***
+ * exercise 26 password strength indicator
+ *
+ * TODO: reactive input
+ */
+
 const ru = require('../util/read-util');
 
 function passwordValidator(password) {

@@ -25,17 +25,22 @@ class GuessNumber {
       this.wrongInputCount++;
       return {
         success: false,
-        noNumber: true
-      }
+        noNumber: true,
+        tryingCount: this.tryingCount,
+        wrongInputCount: this.wrongInputCount
+      };
     }
 
     let guess = +guessInput;
 
     let result = {};
     result.success = guess === this.myNumber;
-    result.duplicatedInput = this.inputs.findIndex(input => input === guess) >= 0;
+    result.duplicatedInput =
+      this.inputs.findIndex(input => input === guess) >= 0;
     result.low = guess < this.myNumber;
     result.high = guess > this.myNumber;
+    result.tryingCount = this.tryingCount;
+    result.wrongInputCount = this.wrongInputCount;
 
     if (!result.duplicatedInput) {
       this.inputs.push(guess);
@@ -57,7 +62,6 @@ async function version2() {
 
       if (level < 1 || level > 3) {
         console.log(`"${level}" is wrong level`);
-        continue;
       } else {
         game = new GuessNumber(level);
         break;
@@ -72,21 +76,19 @@ async function version2() {
       // console.table(result);
 
       if (result.success) {
-        printSuccess(game.tryingCount);
+        printSuccess(result.tryingCount);
         break;
       } else if (result.low || result.high) {
         if (result.duplicatedInput) {
           console.log('duplicated input: ', guessInput);
         }
         question = (result.low ? 'too low' : 'too high') + ' guess again: ';
-        continue;
       } else if (result.noNumber) {
         console.log(`"${guessInput}" is not a number`);
-        continue;
       }
     }
 
-    if (! await askToRetry()) {
+    if (!(await askToRetry())) {
       console.log('good bye.');
       break;
     }
@@ -106,7 +108,6 @@ async function version1() {
 
       if (level < 1 || level > 3) {
         console.log(`"${level}" is wrong level`);
-        continue;
       } else {
         break;
       }
@@ -148,15 +149,13 @@ async function version1() {
         if (inputs.findIndex(input => input === guess) > -1) {
           console.log(`you enter ${guess} again.`);
         }
-
-        continue;
       } else {
         printSuccess(tryingCount);
         break;
       }
     }
 
-    if (! await askToRetry()) {
+    if (!(await askToRetry())) {
       console.log('bye bye.');
       break;
     }

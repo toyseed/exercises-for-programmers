@@ -17,7 +17,7 @@ const ru = require('../util/read-util');
 
     if (!name || name === '') {
       let length = names.length;
-      let picked = Math.floor(Math.random() * 10) % length;
+      let picked = Math.floor(Math.random() * length);
       let pickedName = names[picked];
 
       names.splice(picked, 1);

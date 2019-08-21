@@ -19,5 +19,5 @@ const ru = require('../util/read-util');
     console.log(`It's ${year}, so you can retire in ${year + (retireAge - currentAge)}.`);
 
     ru.close();
-})()
+})();
 

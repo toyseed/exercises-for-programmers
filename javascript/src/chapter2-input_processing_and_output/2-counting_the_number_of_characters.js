@@ -16,5 +16,5 @@ const rl = readline.createInterface({
             question();
         }
     })
-})()
+})();
 

@@ -11,7 +11,7 @@ const ru = require('../util/read-util');
     );
 
     ru.close();
-})()
+})();
 
 async function getNumber(query) {
     let number;

@@ -4,7 +4,7 @@
  *
  * - [x] dollar format
  * - [x] order by salary
- * - [ ] use csv parsing library
+ * - [-] use csv parsing library
  *
  * ## reference
  *
@@ -46,6 +46,7 @@ async function readCSV(path) {
   for await (let line of rl) {
     lines.push(member(line.split(',').map(column => column.trim())));
   }
+  rl.close();
   return lines;
 }
 

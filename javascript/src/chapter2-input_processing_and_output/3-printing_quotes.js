@@ -8,7 +8,7 @@ const rl = readline.createInterface({
 rl.setPrompt('What is the quote? ');
 rl.prompt();
 
-new Promise((resolve, reject) => {
+new Promise((resolve) => {
     rl.on('line', input => resolve(input));
 }).then(a1 => {
     rl.setPrompt('Who said it? ');
@@ -19,4 +19,4 @@ new Promise((resolve, reject) => {
 }).then(result => {
     console.log(result[1] + 'says, "' + result[0] + '"');
     rl.close();
-})
+});

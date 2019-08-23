@@ -2,7 +2,7 @@
  * exercise 46 word frequency finder
  *
  * TODO:
- * - [ ] apply worder
+ * - [ ] apply worker and compare
  *
  * ref
  * - https://cs.stackexchange.com/questions/26427/word-frequency-with-ordering-in-on-complexity

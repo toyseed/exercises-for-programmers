@@ -91,5 +91,5 @@ function printTotal(lines, maxLength, sorter) {
 
   printTotal(lines, maxLength);
 
-  process.exit(1);
+  process.exit(0);
 })();

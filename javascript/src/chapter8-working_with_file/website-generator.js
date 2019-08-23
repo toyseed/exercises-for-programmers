@@ -51,7 +51,7 @@ const renderHTML = function(siteName, author) {
         process.exit(-1);
       }
     } else {
-      process.exit(1);
+      process.exit(0);
     }
   }
 
@@ -77,5 +77,5 @@ const renderHTML = function(siteName, author) {
     process.exit(-1);
   }
 
-  process.exit(1);
+  process.exit(0);
 })();

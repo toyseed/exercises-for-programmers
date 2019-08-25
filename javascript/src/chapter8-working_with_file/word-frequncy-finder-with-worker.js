@@ -1,4 +1,3 @@
-const readline = require('readline');
 const fs = require('fs');
 const path = require('path');
 const { Worker } = require('worker_threads');
@@ -69,15 +68,6 @@ class WorkerGroup {
   }
 }
 console.time('total');
-// const rl = readline.createInterface({
-//   input: fs.createReadStream(
-//     // path.format({ dir: __dirname, name: 'word-frequency-finder.input' })
-//     path.format({ dir: __dirname, name: '_macbeth' })
-//   ),
-//   crlfDelay: Infinity
-// });
-
-
 console.time('read file');
 const content = fs.readFileSync(
   path.format({ dir: __dirname, name: '_macbeth' }),
@@ -95,7 +85,6 @@ const worker = new WorkerGroup(workerPath);
 console.timeEnd('create worker');
 
 console.time('broadcast event');
-// worker.broadcast(words);
 console.time('postMessage outer');
 let part = parseInt(words.length / worker.workerCount);
 for (let i = 0; i < worker.workerCount; i++) {
@@ -104,6 +93,7 @@ for (let i = 0; i < worker.workerCount; i++) {
 console.timeEnd('postMessage outer');
 worker.broadcast('exit');
 console.timeEnd('broadcast event');
+
 console.time('word count');
 const wordMaps = [];
 worker.on('message', message => {
@@ -114,14 +104,15 @@ worker.on('exit', () => {
   console.timeEnd('word count');
   console.time('merge');
   const merged = merge(wordMaps);
-  const result = makeResult(merged.merged);
   console.timeEnd('merge');
+  console.time('make result');
+  const result = makeResult(merged.merged);
+  console.timeEnd('make result');
   console.timeEnd('total');
   console.log(merged.maxWordLength);
 });
 
 function makeResult(wordMap) {
-  console.time('make result');
   const result = [];
   for (let [word, count] of wordMap) {
     let current = result[count];
@@ -131,7 +122,6 @@ function makeResult(wordMap) {
       result[count] = [word];
     }
   }
-  console.timeEnd('make result');
   return result;
 }
 
@@ -141,7 +131,7 @@ function merge(maps) {
   for (let i = 0; i < maps.length; i++) {
     for (let [word, count] of maps[i]) {
       let wordCount = merged.get(word);
-      if (wordCount != undefined) {
+      if (typeof wordCount != 'undefined') {
         merged.set(word, wordCount + count);
       } else {
         merged.set(word, count);
@@ -159,6 +149,15 @@ function merge(maps) {
   };
 }
 
+// too slow
+// const readline = require('readline');
+// const rl = readline.createInterface({
+//   input: fs.createReadStream(
+//     // path.format({ dir: __dirname, name: 'word-frequency-finder.input' })
+//     path.format({ dir: __dirname, name: '_macbeth' })
+//   ),
+//   crlfDelay: Infinity
+// });
 // console.time('read file');
 // rl.on('line', line => {
 //   worker.postMessage(line);

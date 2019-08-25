@@ -4,7 +4,7 @@
  * - [x] apply worker and compare
  *  - there are many overheads
  *    - worker creation
- *    - postMessage to worker : IPC
+ *    - postMessage to worker : structured cloning
  *    - result merging
  *  - in this case, worker is not good idea.
  *

@@ -13,20 +13,21 @@ const Fahrenheit = {
   name: 'Fahrenheit',
   toC: temperature => ((temperature - 32) * 5) / 9,
   toF: temperature => temperature,
-  toK: temperature => Celsius.toK(this.toC(temperature))
+  toK: temperature => Celsius.toK(Fahrenheit.toC(temperature))
 };
 
+// modified for exercise 48
 const Kelvin = {
   code: 'K',
   name: 'Kelvin',
-  toC: temperature => temperature - 273.15,
-  toF: temperature => Celsius.toF(this.toC(temperature)),
-  toK: temperature => temperature
+  toC: temperature => +(temperature - 273.15).toFixed(2),
+  toF: temperature => +Celsius.toF(Kelvin.toC(temperature)).toFixed(2),
+  toK: temperature => +temperature
 };
 
 const temperatureTypes = [Celsius, Fahrenheit, Kelvin];
 
-(async () => {
+const main = async () => {
   const fromTemperatureType = await askTemperatureType('from');
   const toTemperatureType = await askTemperatureType('to');
   const temperatureConverter = getTemperatureConverter(
@@ -41,8 +42,8 @@ const temperatureTypes = [Celsius, Fahrenheit, Kelvin];
   console.log(
     `Them temperature in ${toTemperatureType.name} is ${convertedTemperature}.`
   );
-})();
-
+};
+// main();
 async function askTemperatureType(direction) {
   let temperatureType;
 
@@ -95,4 +96,9 @@ function getTemperatureConverter(fromTemperatureType, toTemperatureType) {
   }
 
   return converter;
+}
+
+// for chapter9/grabbing-the-weather.js
+module.exports = {
+  Kelvin
 }

@@ -1,0 +1,63 @@
+<!--
+exercise 49 flickr photo search
+TODO: challenges
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>filckr photo search</title>
+  </head>
+  <body>
+    <div>
+      <input type="text" class="input" />
+      <button class="search-btn">search</button>
+    </div>
+    <div class="content">
+      <h3 class="title"></h3>
+      <div class="images"></div>
+    </div>
+    <script>
+      window.addEventListener('load', function() {
+        var input = document.querySelector('.input');
+        var button = document.querySelector('.search-btn');
+        button.addEventListener('click', function(event) {
+          event.preventDefault();
+
+          var keyword = input.value;
+          var oReq = new XMLHttpRequest();
+          oReq.addEventListener('load', function() {
+            clearCurrent();
+            showImages(this.responseText, keyword);
+            input.value = '';
+          });
+          // avoid CSRF
+          oReq.open(
+            'GET',
+            'http://localhost:8080/flickr?tag=' + encodeURIComponent(keyword)
+          );
+          oReq.send();
+        });
+      });
+
+      function clearCurrent() {
+        document.querySelector('.content .title').innerText = '';
+        document.querySelector('.content .images').innerText = '';
+      }
+
+      function showImages(responseText, keyword) {
+        var title = document.querySelector('.content .title');
+        title.innerText = `Photos about "${keyword}"`
+        var xmlDoc = new DOMParser().parseFromString(responseText, 'text/xml');
+        // var links = xmlDoc.getElementsByTagName('link');
+        var links = xmlDoc.querySelectorAll('link[rel="enclosure"]');
+        var imageArea = document.querySelector('.content .images');
+        links.forEach(link => {
+          var img = document.createElement('img');
+          img.setAttribute('src', link.getAttribute('href'));
+          imageArea.appendChild(img);
+        })
+      }
+    </script>
+  </body>
+</html>

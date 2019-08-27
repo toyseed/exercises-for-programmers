@@ -10,7 +10,8 @@ TODO: challenges
   </head>
   <body>
     <div>
-      <input type="text" class="input" />
+      <label for="keyword">keyword</label>
+      <input type="text" class="input" id="keyword" />
       <button class="search-btn">search</button>
     </div>
     <div class="content">
@@ -47,16 +48,15 @@ TODO: challenges
 
       function showImages(responseText, keyword) {
         var title = document.querySelector('.content .title');
-        title.innerText = `Photos about "${keyword}"`
+        title.innerText = `Photos about "${keyword}"`;
         var xmlDoc = new DOMParser().parseFromString(responseText, 'text/xml');
-        // var links = xmlDoc.getElementsByTagName('link');
         var links = xmlDoc.querySelectorAll('link[rel="enclosure"]');
         var imageArea = document.querySelector('.content .images');
         links.forEach(link => {
           var img = document.createElement('img');
           img.setAttribute('src', link.getAttribute('href'));
           imageArea.appendChild(img);
-        })
+        });
       }
     </script>
   </body>

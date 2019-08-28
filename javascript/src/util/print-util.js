@@ -16,7 +16,7 @@ function printTable(data) {
 
   for (let column in data[0]) {
     if (data[0].hasOwnProperty(column))
-      columns.push({ name: column, length: 0 });
+      columns.push({ name: column, length: column.length });
   }
 
   // find max length

@@ -27,8 +27,8 @@ async function fetch() {
 (async () => {
   const people = await fetch();
 
-  people.push({name: 'And More', craft: 'BUT'});  // for test
-  people.push({name: 'Hand Less', craft: 'BUT'});  // for test
+  people.push({name: 'And More', craft: 'ZUT'});  // for test
+  people.push({name: 'Hand Less', craft: 'ZUT'});  // for test
   const lastNameRegex = /\b[^\s]+$/;
   printTable(
     people

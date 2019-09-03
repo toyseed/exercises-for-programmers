@@ -22,9 +22,11 @@ export default class Todo extends React.Component<{}, { todoList }> {
   }
 
   componentDidMount(): void {
+    console.log('componentDidMount');
     this._isMounted = true;
     this.todoStorage.getTasks().then((items: []) => {
       if (this._isMounted) {
+        console.log('componentDidMount.setState');
         this.setState({
           todoList: [...items]
         });
@@ -33,6 +35,7 @@ export default class Todo extends React.Component<{}, { todoList }> {
   }
 
   componentWillUnmount(): void {
+    console.log('componentDidUnmount');
     this._isMounted = false;
   }
 

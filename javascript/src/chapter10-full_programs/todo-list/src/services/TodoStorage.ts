@@ -44,8 +44,8 @@ export default class TodoStorage {
       return new Promise(resolve => {
         const interval = setInterval(() => {
           if (this.status.initialized) {
-            resolve(this.db);
             clearInterval(interval);
+            resolve(this.db);
           }
         }, 100);
       });
@@ -58,13 +58,18 @@ export default class TodoStorage {
     }
   }
 
-  getTasks() {
-    console.log('getTasks');
+  private withStorage(mode, callback) {
     return this.getDB().then((db: any) => {
       const storage = db
-        .transaction(TodoStorage.STORAGE_NAME, 'readonly')
+        .transaction(TodoStorage.STORAGE_NAME, mode)
         .objectStore(TodoStorage.STORAGE_NAME);
 
+      return callback(storage);
+    })
+  }
+  getTasks() {
+    console.log('getTasks');
+    return this.withStorage('readonly', (storage) => {
       return new Promise((resolve, reject) => {
         const tasks = [];
         const cursor = storage.openCursor();
@@ -85,36 +90,23 @@ export default class TodoStorage {
   }
 
   addTask(title) {
-    return this.getDB().then((db: any) => {
-      const storage = db
-        .transaction(TodoStorage.STORAGE_NAME, 'readwrite')
-        .objectStore(TodoStorage.STORAGE_NAME);
-
-      const request = storage.add({ title, done: false });
-      request.onsuccess = event => {};
-    });
+    return this.withStorage('readwrite', (storage) => {
+      storage.add({title, done: false});
+    })
   }
 
   doneTask(taskId) {
-    return this.getDB().then((db: any) => {
-      const storage = db
-        .transaction(TodoStorage.STORAGE_NAME, 'readwrite')
-        .objectStore(TodoStorage.STORAGE_NAME);
-
+    return this.withStorage('readwrite', (storage) => {
       storage.get(taskId).onsuccess = event => {
         const task = event.target.result;
         task.done = true;
         storage.put(task);
       }
-    });
+    })
   }
 
   deleteTask(taskId) {
-    return this.getDB().then((db: any) => {
-      const storage = db
-        .transaction(TodoStorage.STORAGE_NAME, 'readwrite')
-        .objectStore(TodoStorage.STORAGE_NAME);
-
+    return this.withStorage('readwrite', (storage) => {
       storage.delete(taskId);
     });
   }

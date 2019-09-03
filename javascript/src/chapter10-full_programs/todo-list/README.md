@@ -1,0 +1,1 @@
+react 와 indexeddb 를 사용한 간단한 todo 앱입니다.

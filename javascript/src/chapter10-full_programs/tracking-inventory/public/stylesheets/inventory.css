@@ -1,0 +1,72 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: normal;
+}
+
+ul {
+  list-style: none;
+}
+
+label, button {
+  cursor: pointer;
+}
+
+.warp {
+    display: flex;
+    flex-direction: column;
+
+    width: 900px;
+    margin: 100px auto;
+}
+
+.section {
+    display: flex;
+    flex-direction: column;
+
+    margin: 10px 0;
+}
+
+.row {
+    display: flex;
+}
+
+.row:nth-child(1) {
+    background-color: #d0d0d0;
+}
+
+.inventory .row:nth-child(2n+3) {
+    background-color: rgba(0, 177, 227, 0.25)
+}
+
+.row span {
+    flex-grow: 0;
+    flex-basis: 300px;
+}
+
+.row span input {
+    width: 100%;
+}
+
+.head {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.input input[type="submit"] {
+    width: 100%;
+}
+
+.view {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}

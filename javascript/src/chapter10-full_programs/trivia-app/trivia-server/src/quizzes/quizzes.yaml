@@ -1,0 +1,55 @@
+quizzes:
+  - id: '1'
+    level: 1
+    quiz: 'quiz 1'
+    examples:
+      - a
+      - b
+      - c
+      - d
+    answer: 1
+  - id: '2'
+    level: 2
+    quiz: 'quiz 2'
+    examples:
+      - e
+      - f
+      - g
+      - h
+    answer: 2
+  - id: '3'
+    level: 3
+    quiz: 'quiz 3'
+    examples:
+      - i
+      - j
+      - k
+      - l
+    answer: 3
+  - id: '4'
+    level: 1
+    quiz: 'quiz 4'
+    examples:
+      - a
+      - b
+      - c
+      - d
+    answer: 1
+  - id: '5'
+    level: 2
+    quiz: 'quiz 5'
+    examples:
+      - e
+      - f
+      - g
+      - h
+    answer: 2
+  - id: '6'
+    level: 3
+    quiz: 'quiz 6'
+    examples:
+      - i
+      - j
+      - k
+      - l
+    answer: 3

@@ -1,0 +1,21 @@
+<div class="quiz">
+  <div class="quiz_question">
+    <p>{{ currentQuiz?.quiz }}</p>
+  </div>
+  <div class="quiz_example">
+    <ol>
+      <li *ngFor="let example of currentQuiz?.examples; let i = index">
+        <input
+          type="radio"
+          name="answer"
+          [value]=i
+          [(ngModel)]="answer"
+        />
+        {{ example }}
+      </li>
+    </ol>
+  </div>
+  <div>
+    <button mat-raised-button color="primary" (click)="check()">check</button>
+  </div>
+</div>
